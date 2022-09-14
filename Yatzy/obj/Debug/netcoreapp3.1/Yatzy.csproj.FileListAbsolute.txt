@@ -11,3 +11,16 @@ C:\Users\axel.friman\Desktop\Yatzy\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.Ass
 C:\Users\axel.friman\Desktop\Yatzy\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.dll
 C:\Users\axel.friman\Desktop\Yatzy\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.pdb
 C:\Users\axel.friman\Desktop\Yatzy\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.genruntimeconfig.cache
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\bin\Debug\netcoreapp3.1\Yatzy.exe
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\bin\Debug\netcoreapp3.1\Yatzy.deps.json
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\bin\Debug\netcoreapp3.1\Yatzy.runtimeconfig.json
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\bin\Debug\netcoreapp3.1\Yatzy.runtimeconfig.dev.json
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\bin\Debug\netcoreapp3.1\Yatzy.dll
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\bin\Debug\netcoreapp3.1\Yatzy.pdb
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.csprojAssemblyReference.cache
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.csproj.CoreCompileInputs.cache
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.AssemblyInfoInputs.cache
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.AssemblyInfo.cs
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.dll
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.pdb
+C:\Users\axel.friman\Desktop\Yatzy\Yatzy\obj\Debug\netcoreapp3.1\Yatzy.genruntimeconfig.cache
