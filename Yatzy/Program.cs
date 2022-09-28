@@ -8,14 +8,15 @@ namespace Yatzy
         {
             int[] player1DiceValue = new int[5]; //En array som sparar spelarens tärningsslag
             int[] player2DiceValue = new int[5];
-
+            int Player1Points = 0; //En int som innehåller spelare 1:s poäng
+            int Player2Points = 0;
             Console.WriteLine("Spelare 1 skriv in ditt användarnamn!"); 
             string player1 = Console.ReadLine();
             Console.WriteLine("Spelare 2 skriv in ditt användarnamn!");
             string player2 = Console.ReadLine();
 
-            int round = 0;
-            while(round < 5)
+            int round = 5;
+            while(round < 11)
             {
                 player1DiceValue = PlayRound(player1, player1DiceValue, round); //Spelar en runda åt spelare 1
                 Console.Clear();
@@ -23,19 +24,25 @@ namespace Yatzy
                 Console.Clear();
                 round += 1;
             }
-            
-            
+            Player1Points = CalculatePoints(Player1Points, player1DiceValue);
+            Player2Points = CalculatePoints(Player2Points, player2DiceValue);
+            Console.WriteLine($"Spelet är slut {player1} fick {Player1Points} och {player2} fick {Player2Points}!");
         }
         public static int[] PlayRound(string name, int[] playerDiceValue, int round) //En funktion som spelar en runda 
         {
             int[] DiceValue = new int[5]; //En array som innehåller vad spelaren har slagit på tärningarna
-
             Console.WriteLine($"{name} det är din tur att slå tärningarna!");
             Console.ReadLine();
             DiceValue = RollDices(DiceValue, playerDiceValue); //Slår tärningar åt spelaren
-            playerDiceValue = SaveDiceValue(DiceValue, playerDiceValue, round); //Sparar de tärningar som spelaren fått
-
-            return playerDiceValue;
+            if (round < 5)
+            {
+                playerDiceValue = SaveDiceValue(DiceValue, playerDiceValue, round); //Sparar de tärningar som spelaren fått
+                return playerDiceValue;
+            }
+            else{
+                playerDiceValue = SaveDiceValue(DiceValue, playerDiceValue, round); //Sparar de tärningar som spelaren fått
+                return playerDiceValue;
+            }
         }
         public static int[] RollDices(int[] DiceValue, int[] playerDiceValue) //En funktion som slår tärningar åt spelaren
         {
@@ -98,7 +105,11 @@ namespace Yatzy
             {
                 Console.WriteLine("Vilken siffra vill du spara på?"); 
                 int ValueToSave = int.Parse(Console.ReadLine()); //Spelaren skriver in vad han/hon vill spara på
-                
+                while(ValueToSave > 5 || ValueToSave < 1) //Om spelaren skriver in ett tal som är större än 5 eller mindre än 1
+                {
+                    Console.WriteLine("Du kan inte ange ett nummer större än 5 eller mindre än 1, ange ett nytt tal!");
+                    ValueToSave = int.Parse(Console.ReadLine());
+                }
                 while(IsSpaceEmpty(ValueToSave, playerDiceValue) == false || NumberExists(ValueToSave, DiceValue) == false) //Kollar om platsen spelaren vill spara på är tom eller om spelaren har slagit det numret han/hon vill spara
                 {
                     Console.WriteLine($"Du har redan tagit {ValueToSave} eller så har du inte slagit {ValueToSave}, ta något annat");
@@ -114,7 +125,12 @@ namespace Yatzy
             }
             else if(round < 5 && CanSave == false) //Om spelaren inte kan spara någon tärning
             {
-                CanNotSaveDiceValue(playerDiceValue); //Startar funktionen "CanNotSaveDiceValue)
+                CanNotSaveDiceValue(playerDiceValue); //Startar funktionen "CanNotSaveDiceValue"
+            }
+            else if(round >= 5)
+            {
+                Console.WriteLine("Vilken kategori vill du spara i?");
+                Console.WriteLine("Par(1), 2-Par(2), Tretal(3), Fyrtal(4), Kåk(5), Liten stege(6), Stor stege(7), Chans(8), Yatzy(10)");
             }
            
             return playerDiceValue;
@@ -146,6 +162,10 @@ namespace Yatzy
                     }
                 }
             }
+            else //Om rundan är större eller lika med 5
+            {
+
+            }
             return false;
         }
         public static bool NumberExists(int ValueToSave, int [] DiceValue) //Kollar ifall ett nummer existerar i en array
@@ -173,6 +193,14 @@ namespace Yatzy
             {
                 Console.WriteLine($"{i + 1}:or: {playerDiceValue[i]}");
             }
+        }
+        public static int CalculatePoints(int Points, int[] PlayerDiceValue)
+        {
+            for (int i = 0; i < PlayerDiceValue.Length; i++)
+            {
+                Points += PlayerDiceValue[i];
+            }
+            return Points;
         }
     }
 }
