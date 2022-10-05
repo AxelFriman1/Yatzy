@@ -101,16 +101,16 @@ namespace Yatzy
         public static int[] SaveDiceValue(int[] DiceValue, int[] playerDiceValue, int round) //En funktion som sparar de spelaren har slagit på tärningarna
         {
             bool CanSave = CheckDiceValue(round, DiceValue, playerDiceValue); //En funktion som kollar ifall spelaren kan spara en tärning eller inte
-            if(round < 5 && CanSave == true)
+            if (round < 5 && CanSave == true)
             {
-                Console.WriteLine("Vilken siffra vill du spara på?"); 
+                Console.WriteLine("Vilken siffra vill du spara på?");
                 int ValueToSave = int.Parse(Console.ReadLine()); //Spelaren skriver in vad han/hon vill spara på
-                while(ValueToSave > 5 || ValueToSave < 1) //Om spelaren skriver in ett tal som är större än 5 eller mindre än 1
+                while (ValueToSave > 5 || ValueToSave < 1) //Om spelaren skriver in ett tal som är större än 5 eller mindre än 1
                 {
                     Console.WriteLine("Du kan inte ange ett nummer större än 5 eller mindre än 1, ange ett nytt tal!");
                     ValueToSave = int.Parse(Console.ReadLine());
                 }
-                while(IsSpaceEmpty(ValueToSave, playerDiceValue) == false || NumberExists(ValueToSave, DiceValue) == false) //Kollar om platsen spelaren vill spara på är tom eller om spelaren har slagit det numret han/hon vill spara
+                while (IsSpaceEmpty(ValueToSave, playerDiceValue) == false || NumberExists(ValueToSave, DiceValue) == false) //Kollar om platsen spelaren vill spara på är tom eller om spelaren har slagit det numret han/hon vill spara
                 {
                     Console.WriteLine($"Du har redan tagit {ValueToSave} eller så har du inte slagit {ValueToSave}, ta något annat");
                     ValueToSave = int.Parse(Console.ReadLine());
@@ -123,16 +123,32 @@ namespace Yatzy
                     }
                 }
             }
-            else if(round < 5 && CanSave == false) //Om spelaren inte kan spara någon tärning
+            else if (round < 5 && CanSave == false) //Om spelaren inte kan spara någon tärning
             {
                 CanNotSaveDiceValue(playerDiceValue); //Startar funktionen "CanNotSaveDiceValue"
             }
-            else if(round >= 5)
+            else if (round >= 5)
             {
                 Console.WriteLine("Vilken kategori vill du spara i?");
-                Console.WriteLine("Par(1), 2-Par(2), Tretal(3), Fyrtal(4), Kåk(5), Liten stege(6), Stor stege(7), Chans(8), Yatzy(10)");
+                Console.WriteLine("Par(1), 2-Par(2), Tretal(3), Fyrtal(4), Kåk(5), Liten stege(6), Stor stege(7), Chans(8), Yatzy(9)");
+                int Category = int.Parse(Console.ReadLine());
+                while (Category < 1 || Category > 9 || (Category == 1 && CanSavePair(DiceValue)) == false) // Om spelaren anger något som är mindre än 1 eller större än 9, eller om spelaren försöker ta en kategori som han/hon inte kan ta
+                {
+                    if (Category < 1 || Category > 9) //Om spelaren har tagit ett tal mindre än 1 eller större än 9
+                    {
+                        Console.WriteLine("Du får endast skriva talen 1, 2, 3, 4, 5, 6, 7, 8 och 9");
+                    }
+                    else if(Category == 1) //Om spelaren försöker ta par trots att han/hon inte kan
+                    {
+                        Console.WriteLine("Du har inte två tärningar som har samma värde, ta något annat");
+                    }
+                    Category = int.Parse(Console.ReadLine());
+                }
+                if(Category == 1)
+                {
+
+                }
             }
-           
             return playerDiceValue;
         }
         public static int[] CanNotSaveDiceValue(int[] playerDiceValue) //En funktion som tar bort en plats som spelaren får välja ur arrayen
@@ -201,6 +217,28 @@ namespace Yatzy
                 Points += PlayerDiceValue[i];
             }
             return Points;
+        }
+        public static bool CanSavePair(int[] DiceValue)
+        {
+            for (int i = 0; i < DiceValue.Length; i++)
+            {
+                for (int j = i + 1; j < DiceValue.Length; j++)
+                {
+                    if(DiceValue[i] == DiceValue[j]) //Om två tärningar har samma värde
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        public static int[] SavePair(int[] DiceValue, int[] playerDiceValue)
+        {
+            int NumberToSave = int.Parse(Console.ReadLine());
+            int NumberExists = 0;
+            
+            
+            return null;
         }
     }
 }
