@@ -6,8 +6,8 @@ namespace Yatzy
     {
         static void Main(string[] args)
         {
-            int[] player1DiceValue = new int[5]; //En array som sparar spelarens tärningsslag
-            int[] player2DiceValue = new int[5];
+            int[] player1DiceValue = new int[14]; //En array som sparar spelarens tärningsslag
+            int[] player2DiceValue = new int[14];
             int Player1Points = 0; //En int som innehåller spelare 1:s poäng
             int Player2Points = 0;
             Console.WriteLine("Spelare 1 skriv in ditt användarnamn!"); 
@@ -132,22 +132,32 @@ namespace Yatzy
                 Console.WriteLine("Vilken kategori vill du spara i?");
                 Console.WriteLine("Par(1), 2-Par(2), Tretal(3), Fyrtal(4), Kåk(5), Liten stege(6), Stor stege(7), Chans(8), Yatzy(9)");
                 int Category = int.Parse(Console.ReadLine());
-                while (Category < 1 || Category > 9 || (Category == 1 && CanSavePair(DiceValue)) == false) // Om spelaren anger något som är mindre än 1 eller större än 9, eller om spelaren försöker ta en kategori som han/hon inte kan ta
+                
+                while ((Category < 1) 
+                    || Category > 9
+                    || (Category == 1 && CanSavePair(DiceValue) == false)
+                    || (Category == 2 && CanSaveTwoPair(DiceValue) == false)) // Om spelaren anger något som är mindre än 1 eller större än 9, eller om spelaren försöker ta en kategori som han/hon inte kan ta
                 {
                     if (Category < 1 || Category > 9) //Om spelaren har tagit ett tal mindre än 1 eller större än 9
                     {
                         Console.WriteLine("Du får endast skriva talen 1, 2, 3, 4, 5, 6, 7, 8 och 9");
                     }
-                    else if(Category == 1) //Om spelaren försöker ta par trots att han/hon inte kan
+                    else //Om spelaren försöker ta en kategory trots att han/hon inte kan
                     {
-                        Console.WriteLine("Du har inte två tärningar som har samma värde, ta något annat");
+                        Console.WriteLine("Du kan inte ta denna kategori ta en annan");
                     }
                     Category = int.Parse(Console.ReadLine());
                 }
                 if(Category == 1)
                 {
-
+                    Console.WriteLine("Du har par");
+                    playerDiceValue = SavePair(DiceValue, playerDiceValue);
                 }
+                else if(Category == 2)
+                {
+                    Console.WriteLine("Du har två-par");
+                }
+                
             }
             return playerDiceValue;
         }
@@ -207,8 +217,21 @@ namespace Yatzy
         {
             for (int i = 0; i < playerDiceValue.Length; i++)
             {
-                Console.WriteLine($"{i + 1}:or: {playerDiceValue[i]}");
+                if(i < 5)
+                {
+                    Console.WriteLine($"{i + 1}:or: {playerDiceValue[i]}");
+                }
+                
             }
+            Console.WriteLine($"Par: {playerDiceValue[5]}");
+            Console.WriteLine($"2-par: {playerDiceValue[6]}");
+            Console.WriteLine($"Tretal: {playerDiceValue[7]}");
+            Console.WriteLine($"Fyrtal: {playerDiceValue[8]}");
+            Console.WriteLine($"Kåk: {playerDiceValue[9]}");
+            Console.WriteLine($"Liten Stege: {playerDiceValue[9]}");
+            Console.WriteLine($"Stor Stege: {playerDiceValue[10]}");
+            Console.WriteLine($"Chans: {playerDiceValue[11]}");
+            Console.WriteLine($"Yatzy: {playerDiceValue[12]}");
         }
         public static int CalculatePoints(int Points, int[] PlayerDiceValue)
         {
@@ -232,10 +255,39 @@ namespace Yatzy
             }
             return false;
         }
+        public static bool CanSaveTwoPair(int[] DiceValue)
+        {
+            int PairNumber = 0;
+            for (int i = 0; i < DiceValue.Length; i++)
+            {
+                for (int j = i + 1; j < DiceValue.Length; j++)
+                {
+                    if(DiceValue[i] == DiceValue[j])
+                    {
+                        PairNumber = DiceValue[i];
+                    }
+                }
+            }
+            for (int i = 0; i < DiceValue.Length; i++)
+            {
+                for (int j = i + 1; j < DiceValue.Length; j++)
+                {
+                    if (DiceValue[i] == DiceValue[j] && DiceValue[i] != PairNumber)
+                    {
+                        return true; //Om två tärningar är samma och två andra tärningar är samma så är det true att spelaren har två-par
+                    }
+                }
+            }
+            return false;
+        }
         public static int[] SavePair(int[] DiceValue, int[] playerDiceValue)
         {
+            Console.WriteLine("Vilket nummer vill du spara?");
             int NumberToSave = int.Parse(Console.ReadLine());
-            int NumberExists = 0;
+            while(NumberExists(NumberToSave, DiceValue) == false)
+            {
+                //Kolla om två av detta tal finns i arrayen DiceValue
+            }
             
             
             return null;
