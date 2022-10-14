@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Yatzy
 {
@@ -136,7 +137,11 @@ namespace Yatzy
                 while ((Category < 1) 
                     || Category > 9
                     || (Category == 1 && CanSavePair(DiceValue) == false)
-                    || (Category == 2 && CanSaveTwoPair(DiceValue) == false)) // Om spelaren anger något som är mindre än 1 eller större än 9, eller om spelaren försöker ta en kategori som han/hon inte kan ta
+                    || (Category == 2 && CanSaveTwoPair(DiceValue) == false)
+                    || (Category == 3 && CanSaveThreeOfAKind(DiceValue) == false)
+                    || (Category == 4 && CanSaveFourOfAKind(DiceValue) == false)
+                    || (Category == 5 && CanSavePairAndTriple(DiceValue) == false)
+                    || (Category == 6 && CanSaveSmallStraight(DiceValue) == false)) // Om spelaren anger något som är mindre än 1 eller större än 9, eller om spelaren försöker ta en kategori som han/hon inte kan ta
                 {
                     if (Category < 1 || Category > 9) //Om spelaren har tagit ett tal mindre än 1 eller större än 9
                     {
@@ -157,7 +162,22 @@ namespace Yatzy
                 {
                     Console.WriteLine("Du har två-par");
                 }
-                
+                else if(Category == 3)
+                {
+                    Console.WriteLine("Du har tretal");
+                }
+                else if(Category == 4)
+                {
+                    Console.WriteLine("Du har fyrtal");
+                }
+                else if(Category == 5)
+                {
+                    Console.WriteLine("Du har kåk");
+                }
+                else if(Category == 6)
+                {
+                    Console.WriteLine("Du har liten stege");
+                }
             }
             return playerDiceValue;
         }
@@ -236,11 +256,14 @@ namespace Yatzy
         public static int CalculatePoints(int Points, int[] PlayerDiceValue)
         {
             for (int i = 0; i < PlayerDiceValue.Length; i++)
-            {
-                Points += PlayerDiceValue[i];
+            {   
+                if(PlayerDiceValue[i] > 0)
+                {
+                    Points += PlayerDiceValue[i];
+                }
             }
             return Points;
-        }
+        } //Räknar ut poängen för en spelare
         public static bool CanSavePair(int[] DiceValue)
         {
             for (int i = 0; i < DiceValue.Length; i++)
@@ -254,7 +277,7 @@ namespace Yatzy
                 }
             }
             return false;
-        }
+        } //Kollar om det finns ett par i en array
         public static bool CanSaveTwoPair(int[] DiceValue)
         {
             int PairNumber = 0;
@@ -264,7 +287,7 @@ namespace Yatzy
                 {
                     if(DiceValue[i] == DiceValue[j])
                     {
-                        PairNumber = DiceValue[i];
+                        PairNumber = DiceValue[i]; //Om man har par i ett tal så sparas det talet
                     }
                 }
             }
@@ -277,6 +300,58 @@ namespace Yatzy
                         return true; //Om två tärningar är samma och två andra tärningar är samma så är det true att spelaren har två-par
                     }
                 }
+            }
+            return false;
+        } //Kollar om det finns två-par i en array
+        public static bool CanSaveThreeOfAKind(int[] DiceValue) //Kollar om det finns tretal i en array
+        {
+            foreach (int i in DiceValue)
+            {
+                if (DiceValue.Where(v => v == i).ToList().Count >= 3)
+                {
+                    return true; //Om det finns 3 av samma tal 
+                }
+            }
+            return false;
+        }
+        public static bool CanSaveFourOfAKind(int[] DiceValue) //Kollar om det finns fyrtal i en array
+        {
+            foreach (int i in DiceValue)
+            {
+                if (DiceValue.Where(v => v == i).ToList().Count >= 4)
+                {
+                    return true; //Om det finns 4 av samma tal
+                }
+            }
+            return false;
+        }
+        public static bool CanSavePairAndTriple(int[] DiceValue) //Kollar om det finns en kåk i en array
+        {
+            int PairNumber = 0;
+            for (int i = 0; i < DiceValue.Length; i++)
+            {
+                for (int j = i + 1; j < DiceValue.Length; j++)
+                {
+                    if (DiceValue[i] == DiceValue[j]) //Om två tärningar har samma värde
+                    {
+                        PairNumber = DiceValue[i];
+                    }
+                }
+            }
+            foreach (int i in DiceValue)
+            {
+                if (DiceValue.Where(v => v == i).ToList().Count >= 3 && DiceValue[i] != PairNumber)
+                {
+                    return true; //Om det finns 3 av samma tal som inte är samma tal som paret
+                }
+            }
+            return false;
+        }
+        public static bool CanSaveSmallStraight(int[] DiceValue)
+        {
+            if (DiceValue.Contains(1) && DiceValue.Contains(2) && DiceValue.Contains(3) && DiceValue.Contains(4) && DiceValue.Contains(5))
+            {
+                return true;
             }
             return false;
         }
