@@ -9,7 +9,7 @@ namespace Yatzy
         {
             int[] Player1DiceValue = new int[11]; //En array som sparar spelarens tärningsslag
             int[] Player2DiceValue = new int[11];
-            int Player1Points = 0; //En int som innehåller spelare 1:s poäng
+            int Player1Points = 0; 
             int Player2Points = 0;
             Console.WriteLine("Spelare 1 skriv in ditt användarnamn!"); 
             string Player1 = Console.ReadLine();
@@ -29,15 +29,15 @@ namespace Yatzy
             Player2Points = CalculatePoints(Player2Points, Player2DiceValue);
             if(Player1Points > Player2Points)
             {
-                Console.WriteLine($"Spelet är slut {Player1} vann och fick {Player1Points}, {Player2} fick {Player2Points}!");
+                Console.WriteLine($"Spelet är slut {Player1} vann och har {Player1Points} poäng, {Player2} har {Player2Points} poäng!");
             }
             else if(Player2Points > Player1Points)
             {
-                Console.WriteLine($"Spelet är slut {Player2} vann och fick {Player2Points}, {Player1} fick {Player1Points}!");
+                Console.WriteLine($"Spelet är slut {Player2} vann och har {Player2Points} poäng, {Player1} har {Player1Points} poäng!");
             }
             else
             {
-                Console.WriteLine($"Det blev lika, båda fick {Player1Points} poäng");
+                Console.WriteLine($"Det blev lika, båda har {Player1Points} poäng");
             }
             
         }
@@ -47,15 +47,8 @@ namespace Yatzy
             Console.WriteLine($"{Name} det är din tur att slå tärningarna!");
             Console.ReadLine();
             DiceValue = RollDices(DiceValue, PlayerDiceValue, Round); //Slår tärningar åt spelaren
-            if (Round < 5)
-            {
-                PlayerDiceValue = SaveDiceValue(DiceValue, PlayerDiceValue, Round); //Sparar de tärningar som spelaren fått
-                return PlayerDiceValue;
-            }
-            else{
-                PlayerDiceValue = SaveDiceValue(DiceValue, PlayerDiceValue, Round); //Sparar de tärningar som spelaren fått
-                return PlayerDiceValue;
-            }
+            PlayerDiceValue = SaveDiceValue(DiceValue, PlayerDiceValue, Round); //Sparar de tärningar som spelaren fått
+            return PlayerDiceValue;
         }
         public static int[] RollDices(int[] DiceValue, int[] PlayerDiceValue, int Round) //En funktion som slår tärningar åt spelaren
         {
@@ -142,7 +135,7 @@ namespace Yatzy
                     CanNotSaveDiceValue(PlayerDiceValue, Round); 
                 }
             }
-            else if (Round >= 5)
+            else
             {
                 if (CanSaveAnything(DiceValue, PlayerDiceValue) == true)
                 {
@@ -272,23 +265,23 @@ namespace Yatzy
             }
             return true;
         }
-        public static void ShowPlayerDiceValue(int[] playerDiceValue, int Round) //Skriver ut vad spelaren har sparat för tärningar
+        public static void ShowPlayerDiceValue(int[] PlayerDiceValue, int Round) //Skriver ut vad spelaren har sparat för tärningar
         {
-            for (int i = 0; i < playerDiceValue.Length; i++)
+            for (int i = 0; i < PlayerDiceValue.Length; i++)
             {
                 if(i < 5)
                 {
-                    Console.WriteLine($"{i + 1}:or: {playerDiceValue[i]}");
+                    Console.WriteLine($"{i + 1}:or: {PlayerDiceValue[i]}");
                 }
             }
             if(Round >= 5)
             {
-                Console.WriteLine($"Par: {playerDiceValue[5]}");
-                Console.WriteLine($"2-par: {playerDiceValue[6]}");
-                Console.WriteLine($"Tretal: {playerDiceValue[7]}");
-                Console.WriteLine($"Fyrtal: {playerDiceValue[8]}");
-                Console.WriteLine($"Liten Stege: {playerDiceValue[9]}");
-                Console.WriteLine($"Chans: {playerDiceValue[10]}");
+                Console.WriteLine($"Par: {PlayerDiceValue[5]}");
+                Console.WriteLine($"2-par: {PlayerDiceValue[6]}");
+                Console.WriteLine($"Tretal: {PlayerDiceValue[7]}");
+                Console.WriteLine($"Fyrtal: {PlayerDiceValue[8]}");
+                Console.WriteLine($"Liten Stege: {PlayerDiceValue[9]}");
+                Console.WriteLine($"Chans: {PlayerDiceValue[10]}");
             }
         }
         public static int CalculatePoints(int Points, int[] PlayerDiceValue)
